@@ -2,6 +2,7 @@ import express from "express";
 import {userInfo} from "os";
 import path from "path";
 import { fileURLToPath } from "url";
+import {v4 as uuidv4} from "uuid";
 
 const app = express();
 const port = 8080;
@@ -17,17 +18,17 @@ app.use(express.static(path.join(__dirname,"public")));
 
 let posts = [
     {
-        id : "1a",
+        id : uuidv4(),
         username: "apnacollege",
         content: "I love Coding!! Happy Coding"
     },
     {
-        id : "2a",
+        id : uuidv4(),
         username: "ritesh_hood_07",
         content: "I am React Developer! I am from Jalna"
     },
     {
-        id : "3a",
+        id : uuidv4(),
         username: "shivrajj.jagtap",
         content: "I Frontend Developer! I am from Pune"
     }
@@ -43,7 +44,8 @@ app.get("/posts/new",(req,res)=>{
 
 app.post("/posts",(req,res)=>{
     let {username,content} = req.body;
-    posts.push({username,content});
+    let id = uuidv4();
+    posts.push({id,username,content});
     res.redirect("/posts");
 });
 
