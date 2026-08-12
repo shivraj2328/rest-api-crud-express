@@ -51,7 +51,16 @@ app.get("/posts/:id",(req,res)=>{
     let {id} = req.params;
     let post = posts.find((p)=> p.id === id);
     res.render("show.ejs",{post});
-})
+});
+
+app.patch("/posts/:id",(req,res)=>{
+    let {id} = req.params;
+    let newContent = req.body.content;
+    let post = posts.find((p)=>p.id===id);
+    post.content = newContent;
+    console.log(post);
+    res.send("Patch route running");
+});
 
 app.listen(port,()=>{
     console.log(`Running on ${port}`);
