@@ -3,6 +3,7 @@ import {userInfo} from "os";
 import path from "path";
 import { fileURLToPath } from "url";
 import {v4 as uuidv4} from "uuid";
+import methodOverride from "method-override";
 
 const app = express();
 const port = 8080;
@@ -11,6 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -61,7 +63,7 @@ app.patch("/posts/:id",(req,res)=>{
     let post = posts.find((p)=>p.id===id);
     post.content = newContent;
     console.log(post);
-    res.send("Patch route running");
+    res.redirect("/posts");
 });
 
 app.listen(port,()=>{
